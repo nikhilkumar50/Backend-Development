@@ -1,0 +1,17 @@
+express app can run in different environment 
+-production environment
+-development environment(By default)
+
+->environment variable are global variable which are used to define the environment in which node app is running
+
+->process is the core module of node.js
+
+
+//mongo DB
+
+Schema -Define the structure
+      schema-module
+      Using Model we do CRUD Operation
+
+
+
