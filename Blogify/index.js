@@ -2,11 +2,12 @@ const path=require('path');
 const express=require('express');
 const userRoute=require("./routes/user");
 const mongoose=require("mongoose");
+const {ConnectMongoDb}=require('./connection');
 
 const app=express();
 const PORT=8000;
 
-mongoose.connect('mongodb://localhost:27017/blogify').then(()=>console.log("MongoDb Connected")).catch((error)=>console.log(error));
+ConnectMongoDb('mongodb://localhost:27017/blogify').then(()=>console.log("MongoDb Connected")).catch((error)=>console.log(error));
 
 app.set("view engine","ejs");
 app.set("views",path.resolve("./views"));
