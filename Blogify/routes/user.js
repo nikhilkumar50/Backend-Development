@@ -1,5 +1,5 @@
 const {Router}=require("express");
-const{handleUserSignUp,handleUserSignIn}=require("../controllers/user");
+const{handleUserSignUp,handleUserSignIn, handleUserLogOut}=require("../controllers/user");
 
 const router=Router();
 
@@ -13,6 +13,7 @@ router.get("/signup",(req,res)=>{
 
 router.post("/signup",handleUserSignUp);
 router.post("/signin",handleUserSignIn);
+router.get('/logout',handleUserLogOut)
 
 
 

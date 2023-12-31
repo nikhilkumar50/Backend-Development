@@ -1,8 +1,12 @@
 const path=require('path');
 const express=require('express');
 const userRoute=require("./routes/user");
+const blogRoute=require("./routes/blog");
 const mongoose=require("mongoose");
 const {ConnectMongoDb}=require('./connection');
+const cookieParser = require('cookie-parser');
+const { checkForAuthenticationCookie } = require('./middlewares/authetication');
+const Blog=require("./models/blog");
 
 const app=express();
 const PORT=8000;
@@ -13,10 +17,18 @@ app.set("view engine","ejs");
 app.set("views",path.resolve("./views"));
 
 app.use(express.urlencoded({extended:false}));
+app.use(cookieParser())
+app.use(checkForAuthenticationCookie("token"));
+app.use(express.static(path.resolve("./public")));
 
-app.get('/',(req,res)=>{
-    return res.render('home.ejs');
+
+app.get('/',async(req,res)=>{
+    const allBlogs=await Blog.find({});
+    return res.render('home.ejs',{
+        user:req.user,
+        blogs:allBlogs
+    });
 })
 app.use("/user",userRoute);
-
-app.listen(PORT,()=>console.log(`Server Started at PORT ${PORT}`));
+app.use("/blog",blogRoute)
+app.listen(PORT,()=>console.log(`Server Started at PORT ${PORT}`)); 
