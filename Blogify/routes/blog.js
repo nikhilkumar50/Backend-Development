@@ -1,7 +1,7 @@
 const {Router}=require("express");
 const multer=require('multer');
 const path=require("path");
-const{handleAddNewBlog,handleIndiviualBlog}=require("../controllers/blog");
+const{handleAddNewBlog,handleIndiviualBlog,handleIndividualComment}=require("../controllers/blog");
 
 const router=Router();
 
@@ -29,5 +29,6 @@ router.get("/add-new",(req,res)=>{
 router.post("/",upload.single("coverImage"),handleAddNewBlog);
 router.get("/:id",handleIndiviualBlog);
 
+router.post("/comment/:blogId",handleIndividualComment);
 
 module.exports=router; 
