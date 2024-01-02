@@ -7,15 +7,37 @@
 </head>
 <body>
     <h1>Chatting App</h1>
-    <button onclick="createConnection">Establish New Connection</button>
+    <input type="text" id="message" placeholder="Enter your message"/>
+    <button id="sendBtn">Send</button>
+    <div id="messageBox">
+
+    </div>
+    
+
+
 
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        function createConnection(){
-            const socket=io();
-        }
+        const socket=io();
+        const sendBtn=document.getElementById("sendBtn");
+        const messageInput=document.getElementById("message");
+        const messageBox=document.getElementById("messageBox");
+
         
+
+
+        socket.on("message",(message)=>{
+            const p=document.createElement('p');
+            p.innerText=message;
+            messageBox.append(p);
+        });
+
+        sendBtn.addEventListener("click",(e)=>{
+            const message=messageInput.value;
+            socket.emit("user-message",message);
+        })
+
     </script>
 </body>
 </html>

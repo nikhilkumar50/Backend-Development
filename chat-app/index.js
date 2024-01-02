@@ -8,7 +8,10 @@ const server=http.createServer(app);
 const io=new Server(server);
 
 io.on("connection",(socket)=>{
-    console.log("A new user has connected",socket.id);
+    socket.on("user-message",(message)=>{
+        io.emit("message",message);
+
+    })
 })
 
 app.use(express.static(path.resolve("./public")));
